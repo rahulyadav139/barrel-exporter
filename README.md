@@ -22,7 +22,7 @@ _A barrel is a way to rollup exports from several modules into a single convenie
 ## Installation
 
 
-```bash
+```console
   $ npm install --save-dev barrel-exporter
 ```
 
@@ -32,7 +32,7 @@ _A barrel is a way to rollup exports from several modules into a single convenie
 Add a script in package.json 
 
 You can set any custom script name like: 
-```bash
+```json
 "scripts": {
 "exporter" : "barrel-exporter"
 }
@@ -40,7 +40,7 @@ You can set any custom script name like:
 
 Run command in console that will create index.js file in the folder where you want to implement barrel exporting
 
-```bash
+```console
 $ npm run exporter --path=src/pages
 ```
 Set path in command where you want barrel exporting.
@@ -49,7 +49,7 @@ Set path in command where you want barrel exporting.
 
 After executing the command, an index.js file is created with multiple named export at the given path. ( in this case: src/pages/index.js )
 
-```bash
+```js
 export { AuthPage } from './AuthPage.js';
 export { HomePage } from './HomePage.js';
 ```
@@ -66,7 +66,7 @@ pages <br/>
 
 ### The way to import files
 
-```bash
+```js
 import AuthPage from './pages/AuthPage';
 import HomePage from './pages/HomePage';
 ```
@@ -88,7 +88,7 @@ pages <br/>
 
 ### The way to import files
 
-```bash
+```js
 import { AuthPage, HomePage } from './pages'
 ```
 
