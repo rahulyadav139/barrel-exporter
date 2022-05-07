@@ -1,11 +1,24 @@
 {
   "name": "barrel-exporter",
   "version": "1.0.0",
-  "description": "",
+  "description": "Package for implementing barrel exporting in React, Next JS.",
   "main": "index.js",
+  "bin": {
+    "barrel-exporter": "bin/index.js"
+  },
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
-  "author": "Rahul Yadav",
-  "license": "MIT"
+  "author": "Rahul Yadav <ry.rahulmyadav@gmail.com> (https://www.rahulyadav.tech/)",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/rahulyadav139/barrel-exporter.git"
+  },
+  "keywords": [
+    "barrel-exporting",
+    "react-import-export",
+    "exporter"
+  ],
+  "homepage": "https://github.com/rahulyadav139/barrel-exporter"
 }
