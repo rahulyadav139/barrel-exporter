@@ -19,4 +19,15 @@ const getAllFilePaths = directory => {
   });
 };
 
+const hasIndexFile = directory => {
+  const subDirectories = fs
+    .readdirSync(directory)
+    .map(subDirectory => subDirectory.toLowerCase())
+    .filter(subDirectory => !subDirectory.startsWith('.'));
+
+  return subDirectories.includes('index.js') ? true : false;
+};
+
+console.log(hasIndexFile(folderPath));
+
 getAllFilePaths(folderPath);
