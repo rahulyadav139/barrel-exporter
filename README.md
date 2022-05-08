@@ -92,9 +92,13 @@ pages <br/>
 import { AuthPage, HomePage } from './pages'
 ```
 
+## What it solves?
+
+If you want to implement barrel exporting then you need to create Index.js file and then manually export all the files with correct path. But with **Barrel Exporter**, Index.js file is automatically created with correct exporting and path. Isn't it amazing!!
+
 ## Features
 
-- No third package dependency
+- No third party package dependency
 - Light weight (~ 3kb)
 - .js and .jsx file extension supported
 
