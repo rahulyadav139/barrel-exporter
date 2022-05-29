@@ -2,6 +2,11 @@
 
 const fs = require('fs');
 const path = require('path');
+const readline = require('readline');
+const chalk = require('chalk');
+const { stdin, stdout } = require('process');
+
+const rl = readline.Interface(stdin, stdout);
 
 const folderPath = process.env.npm_config_path;
 
@@ -135,7 +140,7 @@ const getExportData = filepaths => {
     //new index file created with exporting data
   }
 
-  console.log('\nEnjoy Coding!');
+  console.log(chalk.green('\nEnjoy Coding!'));
 };
 
 const initializeExporter = () => {
@@ -149,27 +154,34 @@ const initializeExporter = () => {
       'This directory already has index file!\n\nDo you want to overwrite index file? (y/n)\n'
     );
 
-    const userInput = readlineSync.question('-> ');
+    // const userInput = readlineSync.question('-> ');
 
-    if (!userInput?.trim()) {
-      return console.log('\nInvalid input');
-    } else if (
-      userInput?.toLowerCase() === 'n' ||
-      userInput?.toLowerCase() === 'no'
-    ) {
-      return console.log('\nThe process is terminated!');
-    } else if (
-      userInput?.toLowerCase() === 'y' ||
-      userInput?.toLowerCase() === 'yes'
-    ) {
-    } else {
-      return console.log('\nInvalid input');
-    }
+    rl.question('-> ', userInput => {
+      rl.close();
+
+      if (!userInput?.trim()) {
+        return console.log(chalk.red('\nInvalid input'));
+      } else if (
+        userInput?.toLowerCase() === 'n' ||
+        userInput?.toLowerCase() === 'no'
+      ) {
+        return console.log(chalk.blue('\nThe process is terminated!'));
+      } else if (
+        userInput?.toLowerCase() === 'y' ||
+        userInput?.toLowerCase() === 'yes'
+      ) {
+        getAllFilePaths(folderPath);
+
+        getExportData(allFilePathsData);
+      } else {
+        return console.log(chalk.red('\nInvalid input'));
+      }
+    });
+  } else {
+    getAllFilePaths(folderPath);
+
+    getExportData(allFilePathsData);
   }
-
-  getAllFilePaths(folderPath);
-
-  getExportData(allFilePathsData);
 };
 
 initializeExporter();
