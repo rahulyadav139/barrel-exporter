@@ -100,5 +100,6 @@ If you want to implement barrel exporting then you need to create Index.js file 
 
 - Option provided to overwrite already existing index file
 - .js and .jsx file extension supported
+- No external dependency
 
 ---
