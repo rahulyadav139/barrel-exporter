@@ -3,7 +3,7 @@
 const fs = require('fs');
 const path = require('path');
 const readline = require('readline');
-const chalk = require('chalk');
+
 const { stdin, stdout } = require('process');
 
 const rl = readline.Interface(stdin, stdout);
@@ -140,7 +140,7 @@ const getExportData = filepaths => {
     //new index file created with exporting data
   }
 
-  console.log(chalk.green('\nEnjoy Coding!'));
+  console.log('\u001b[1;32m \nEnjoy Coding! \u001b[0m');
 };
 
 const initializeExporter = () => {
@@ -154,18 +154,18 @@ const initializeExporter = () => {
       'This directory already has index file!\n\nDo you want to overwrite index file? (y/n)\n'
     );
 
-    // const userInput = readlineSync.question('-> ');
-
     rl.question('-> ', userInput => {
       rl.close();
 
       if (!userInput?.trim()) {
-        return console.log(chalk.red('\nInvalid input'));
+        return console.log('\u001b[1;31m \nInvalid input \u001b[0m');
       } else if (
         userInput?.toLowerCase() === 'n' ||
         userInput?.toLowerCase() === 'no'
       ) {
-        return console.log(chalk.blue('\nThe process is terminated!'));
+        return console.log(
+          '\u001b[1;34m \nThe process is terminated! \u001b[0m'
+        );
       } else if (
         userInput?.toLowerCase() === 'y' ||
         userInput?.toLowerCase() === 'yes'
@@ -174,10 +174,11 @@ const initializeExporter = () => {
 
         getExportData(allFilePathsData);
       } else {
-        return console.log(chalk.red('\nInvalid input'));
+        return console.log('\u001b[1;31m \nInvalid input \u001b[0m');
       }
     });
   } else {
+    rl.close();
     getAllFilePaths(folderPath);
 
     getExportData(allFilePathsData);
