@@ -98,8 +98,7 @@ If you want to implement barrel exporting then you need to create Index.js file 
 
 ## Features
 
-- No third party package dependency
-- Light weight (~ 3kb)
+- Option provided to overwrite already existing index file
 - .js and .jsx file extension supported
 
 ---
