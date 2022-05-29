@@ -1,6 +1,8 @@
 {
   "name": "barrel-exporter",
+
   "version": "1.0.2",
+
   "description": "Package for implementing barrel exporting in React, Next JS.",
   "main": "index.js",
   "bin": {
