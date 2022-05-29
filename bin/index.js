@@ -135,7 +135,7 @@ const getExportData = filepaths => {
     //new index file created with exporting data
   }
 
-  console.log('Enjoy Coding!');
+  console.log('\nEnjoy Coding!');
 };
 
 const initializeExporter = () => {
@@ -144,10 +144,28 @@ const initializeExporter = () => {
       "Error: You haven't mentioned path where you want to implement barrel exporting.\n\nPlease use command 'npm run <script_name> --path=<file_path>"
     );
 
-  if (hasIndexFile(folderPath))
-    return console.log(
-      'Error: This directory already has index file. Remove it or rename the file to something else.'
+  if (hasIndexFile(folderPath)) {
+    console.log(
+      'This directory already has index file!\n\nDo you want to overwrite index file? (y/n)\n'
     );
+
+    const userInput = readlineSync.question('-> ');
+
+    if (!userInput?.trim()) {
+      return console.log('\nInvalid input');
+    } else if (
+      userInput?.toLowerCase() === 'n' ||
+      userInput?.toLowerCase() === 'no'
+    ) {
+      return console.log('\nThe process is terminated!');
+    } else if (
+      userInput?.toLowerCase() === 'y' ||
+      userInput?.toLowerCase() === 'yes'
+    ) {
+    } else {
+      return console.log('\nInvalid input');
+    }
+  }
 
   getAllFilePaths(folderPath);
 
