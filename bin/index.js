@@ -170,6 +170,15 @@ const initializeExporter = () => {
         userInput?.toLowerCase() === 'y' ||
         userInput?.toLowerCase() === 'yes'
       ) {
+        fs.unlink(folderPath + '/index.js', err => {
+          if (err) {
+          }
+        });
+        fs.unlink(folderPath + '/index.jsx', err => {
+          if (err) {
+          }
+        });
+
         getAllFilePaths(folderPath);
 
         getExportData(allFilePathsData);
