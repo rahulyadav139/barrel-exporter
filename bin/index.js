@@ -25,18 +25,32 @@ const getAllFilePaths = directory => {
 };
 
 const hasIndexFile = directory => {
-  const subDirectories = fs
-    .readdirSync(directory)
-    .map(subDirectory => subDirectory.toLowerCase())
-    .filter(subDirectory => !subDirectory.startsWith('.'));
+  let error, result;
 
-  return subDirectories.includes('index.js') ? true : false;
+  try {
+    const subDirectories = fs
+      .readdirSync(directory)
+      .map(subDirectory => subDirectory.toLowerCase())
+      .filter(subDirectory => !subDirectory.startsWith('.'));
+
+    result =
+      subDirectories.includes('index.js') ||
+      subDirectories.includes('index.ts');
+
+    error = false;
+  } catch (err) {
+    error = true;
+    result = null;
+  }
+  return { error, result };
 };
 
 const getExportData = filepaths => {
   let exportData = '';
 
-  const allJSFilePaths = filepaths.filter(filePath => filePath.includes('.js'));
+  const allJSFilePaths = filepaths
+    .filter(filePath => filePath.includes('.js') || filePath.includes('.ts'))
+    .filter(filepath => !filepath.includes('index.'));
 
   for (const JSFilePath of allJSFilePaths) {
     let content = fs.readFileSync(JSFilePath).toString();
@@ -78,8 +92,7 @@ const getExportData = filepaths => {
 
     if (!!content.match(regexForExportDefault)) {
       return console.log(
-        'Error: export default is not allowed for barrel exporting. Error in file ' +
-          updatedPath
+        `\u001b[1;31m \nError \u001b[0m\n\nExport default is not allowed for barrel exporting. Error in file ${updatedPath}`
       );
     }
 
@@ -144,12 +157,21 @@ const getExportData = filepaths => {
 };
 
 const initializeExporter = () => {
-  if (!folderPath)
+  if (!folderPath) {
+    rl.close();
     return console.log(
-      "Error: You haven't mentioned path where you want to implement barrel exporting.\n\nPlease use command 'npm run <script_name> --path=<file_path>"
+      "\u001b[1;31m \nError \u001b[0m\n\nYou haven't mentioned path where you want to implement barrel exporting.\n\nPlease use command 'npm run <script_name> --path=<file_path>"
     );
+  }
 
-  if (hasIndexFile(folderPath)) {
+  const { error, result } = hasIndexFile(folderPath);
+
+  if (error) {
+    rl.close();
+    return console.log('\u001b[1;31m \nError \u001b[0m\n\nInvalid directory');
+  }
+
+  if (result) {
     console.log(
       'This directory already has index file!\n\nDo you want to overwrite index file? (y/n)\n'
     );
@@ -158,7 +180,7 @@ const initializeExporter = () => {
       rl.close();
 
       if (!userInput?.trim()) {
-        return console.log('\u001b[1;31m \nInvalid input \u001b[0m');
+        return console.log('\u001b[1;31m \nError \u001b[0m\n\nInvalid input');
       } else if (
         userInput?.toLowerCase() === 'n' ||
         userInput?.toLowerCase() === 'no'
@@ -170,6 +192,8 @@ const initializeExporter = () => {
         userInput?.toLowerCase() === 'y' ||
         userInput?.toLowerCase() === 'yes'
       ) {
+        getAllFilePaths(folderPath);
+
         fs.unlink(folderPath + '/index.js', err => {
           if (err) {
           }
@@ -178,12 +202,18 @@ const initializeExporter = () => {
           if (err) {
           }
         });
-
-        getAllFilePaths(folderPath);
+        fs.unlink(folderPath + '/index.ts', err => {
+          if (err) {
+          }
+        });
+        fs.unlink(folderPath + '/index.tsx', err => {
+          if (err) {
+          }
+        });
 
         getExportData(allFilePathsData);
       } else {
-        return console.log('\u001b[1;31m \nInvalid input \u001b[0m');
+        return console.log('\u001b[1;31m \nError \u001b[0m\n\nInvalid input');
       }
     });
   } else {
