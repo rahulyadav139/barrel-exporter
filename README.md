@@ -40,6 +40,12 @@ want to implement barrel exporting
 $ npm run exporter --path=src/pages
 ```
 
+Use `--ts` flag to get all the exports in `index.ts` file
+
+```console
+$ npm run exporter --path=src/pages --ts
+```
+
 Set path in command where you want barrel exporting.
 
 After executing the command, an index.js file is created with multiple named
@@ -91,6 +97,6 @@ path. Isn't it amazing!!
 ## Features
 
 - Option provided to overwrite already existing index file
-- .js and .jsx file extension supported
+- .js, .jsx, .ts, and .tsx file extension supported
 
 ---

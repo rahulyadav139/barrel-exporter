@@ -68,8 +68,8 @@ const getPaths = (dir: string): string[] => {
     for (const dir of directories) {
       const exportFrom = dir
         .replace(new RegExp(`^${directory}`), '.')
-        .replace(`/index${ext}`, '')
-        .replace(ext, '');
+        .replace(new RegExp(`(|\/index)${ext}(|x)$`), '');
+      // .replace(ext, '');
 
       content += `export * from "${exportFrom}";\n`;
     }
